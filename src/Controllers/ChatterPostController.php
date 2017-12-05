@@ -68,7 +68,7 @@ class ChatterPostController extends Controller
                 $chatter_alert = [
                     'chatter_alert_type' => 'danger',
                     'chatter_alert'      => 'In order to prevent spam, please allow at least '.config('chatter.security.time_between_posts').$minute_copy.' in between submitting content.',
-                    ];
+                ];
 
                 return back()->with($chatter_alert)->withInput();
             }
@@ -90,7 +90,7 @@ class ChatterPostController extends Controller
         }
 
         if ($new_post->id) {
-            Event::fire(new ChatterAfterNewResponse($request, $new_post));
+            Event::fire(new ChatterAfterNewResponse($request));
             if (function_exists('chatter_after_new_response')) {
                 chatter_after_new_response($request);
             }
@@ -104,14 +104,14 @@ class ChatterPostController extends Controller
             $chatter_alert = [
                 'chatter_alert_type' => 'success',
                 'chatter_alert'      => 'Response successfully submitted to '.config('chatter.titles.discussion').'.',
-                ];
+            ];
 
             return redirect('/'.config('chatter.routes.home').'/'.config('chatter.routes.discussion').'/'.$category->slug.'/'.$discussion->slug)->with($chatter_alert);
         } else {
             $chatter_alert = [
                 'chatter_alert_type' => 'danger',
                 'chatter_alert'      => 'Sorry, there seems to have been a problem submitting your response.',
-                ];
+            ];
 
             return redirect('/'.config('chatter.routes.home').'/'.config('chatter.routes.discussion').'/'.$category->slug.'/'.$discussion->slug)->with($chatter_alert);
         }
@@ -160,7 +160,7 @@ class ChatterPostController extends Controller
         }
 
         $post = Models::post()->find($id);
-        if (!Auth::guest() && (Auth::user()->id == $post->user_id)) {
+        if (!Auth::guest() && (Auth::user()->id == $post->user_id || Auth::user()->role()->value("authority") === 1)) {
             $post->body = Purifier::clean($request->body);
             $post->save();
 
@@ -174,14 +174,14 @@ class ChatterPostController extends Controller
             $chatter_alert = [
                 'chatter_alert_type' => 'success',
                 'chatter_alert'      => 'Successfully updated the '.config('chatter.titles.discussion').'.',
-                ];
+            ];
 
             return redirect('/'.config('chatter.routes.home').'/'.config('chatter.routes.discussion').'/'.$category->slug.'/'.$discussion->slug)->with($chatter_alert);
         } else {
             $chatter_alert = [
                 'chatter_alert_type' => 'danger',
                 'chatter_alert'      => 'Nah ah ah... Could not update your response. Make sure you\'re not doing anything shady.',
-                ];
+            ];
 
             return redirect('/'.config('chatter.routes.home'))->with($chatter_alert);
         }
@@ -199,7 +199,7 @@ class ChatterPostController extends Controller
     {
         $post = Models::post()->with('discussion')->findOrFail($id);
 
-        if ($request->user()->id !== (int) $post->user_id) {
+        if ($request->user()->id !== (int) $post->user_id  && Auth::user()->role()->value("authority") !== 1) {
             return redirect('/'.config('chatter.routes.home'))->with([
                 'chatter_alert_type' => 'danger',
                 'chatter_alert'      => 'Nah ah ah... Could not delete the response. Make sure you\'re not doing anything shady.',
