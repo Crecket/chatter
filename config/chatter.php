@@ -144,7 +144,7 @@ return [
     */
 
     'user' => [
-        'namespace'                     => 'App\User',
+        'namespace'                     => 'App\Model\User',
         'database_field_with_user_name' => 'username',
         'relative_url_to_profile'       => '',
         'relative_url_to_image_assets'  => '',
