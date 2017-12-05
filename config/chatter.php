@@ -91,7 +91,7 @@ return [
     |
     */
 
-    'master_file_extend' => 'layouts.app',
+    'master_file_extend' => 'layouts.chatter',
 
     /*
     |--------------------------------------------------------------------------
@@ -145,7 +145,7 @@ return [
 
     'user' => [
         'namespace'                     => 'App\User',
-        'database_field_with_user_name' => 'name',
+        'database_field_with_user_name' => 'username',
         'relative_url_to_profile'       => '',
         'relative_url_to_image_assets'  => '',
         'avatar_image_database_field'   => '',
