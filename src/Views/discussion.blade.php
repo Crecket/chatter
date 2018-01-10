@@ -27,7 +27,7 @@
 			<div class="container">
 				<a class="back_btn" href="/{{ Config::get('chatter.routes.home') }}"><i class="chatter-back"></i></a>
 				<h1>{{ $discussion->title }}</h1><span
-						class="chatter_head_details">Posted In {{ Config::get('chatter.titles.category') }}<a
+						class="chatter_head_details">Geplaatst In {{ Config::get('chatter.titles.category') }}<a
 							class="chatter_cat"
 							href="/{{ Config::get('chatter.routes.home') }}/{{ Config::get('chatter.routes.category') }}/{{ $discussion->category->slug }}"
 							style="background-color:{{ $discussion->category->color }}">{{ $discussion->category->name }}</a></span>
@@ -50,7 +50,7 @@
 			<div class="chatter-alert alert alert-danger">
 				<div class="container">
 					<p><strong><i class="chatter-alert-danger"></i> {{ Config::get('chatter.alert_messages.danger') }}
-						</strong> Please fix the following errors:</p>
+						</strong> Los de volgende fouten op:</p>
 					<ul>
 						@foreach ($errors->all() as $error)
 							<li>{{ $error }}</li>
@@ -71,9 +71,9 @@
 								<!-- SIDEBAR -->
 								<div class="chatter_sidebar">
 									<button class="btn btn-primary" id="new_discussion_btn"><i class="chatter-new"></i>
-										New {{ Config::get('chatter.titles.discussion') }}</button>
+										Nieuwe {{ Config::get('chatter.titles.discussion') }}</button>
 									<a href="/{{ Config::get('chatter.routes.home') }}"><i class="chatter-bubble"></i>
-										All {{ Config::get('chatter.titles.discussions') }}</a>
+										Alle {{ Config::get('chatter.titles.discussions') }}</a>
 									<ul class="nav nav-pills nav-stacked">
                                         <?php $categories = DevDojo\Chatter\Models\Models::category()->all(); ?>
 										@foreach($categories as $category)
@@ -98,16 +98,16 @@
 		                			@if(!Auth::guest() && (Auth::user()->id == $post->user->id || $isAdmin))
 
 										<div id="delete_warning_{{ $post->id }}" class="chatter_warning_delete">
-		                					<i class="chatter-warning"></i>Are you sure you want to delete this response?
-		                					<button class="btn btn-sm btn-danger pull-right delete_response">Yes Delete It</button>
-		                					<button class="btn btn-sm btn-default pull-right">No Thanks</button>
+		                					<i class="chatter-warning"></i>Weet je zeker dat je dit antwoord wilt verwijderen?
+		                					<button class="btn btn-sm btn-danger pull-right delete_response">Ja</button>
+		                					<button class="btn btn-sm btn-default pull-right">Nee</button>
 		                				</div>
 										<div class="chatter_post_actions">
 			                				<p class="chatter_delete_btn">
-			                					<i class="chatter-delete"></i> Delete
+			                					<i class="chatter-delete"></i> Verwijder
 			                				</p>
 			                				<p class="chatter_edit_btn">
-			                					<i class="chatter-edit"></i> Edit
+			                					<i class="chatter-edit"></i> Bewerk
 			                				</p>
 			                			</div>
 									@endif
@@ -197,8 +197,7 @@
 												<!-- BODY -->
 												<div id="editor">
 													@if( $chatter_editor == 'tinymce' || empty($chatter_editor) )
-														<label id="tinymce_placeholder">Type Your Discussion
-															Here...</label>
+														<label id="tinymce_placeholder">Voer hier je antwoord in...</label>
 														<textarea id="body" class="richText" name="body"
 																  placeholder="">{{ old('body') }}</textarea>
 													@elseif($chatter_editor == 'simplemde')
@@ -206,7 +205,7 @@
 																  placeholder="">{{ old('body') }}</textarea>
 													@elseif($chatter_editor == 'trumbowyg')
 														<textarea class="trumbowyg" name="body"
-																  placeholder="Type Your Discussion Here...">{{ old('body') }}</textarea>
+																  placeholder="Voer hier je antwoord in...">{{ old('body') }}</textarea>
 													@endif
 												</div>
 
@@ -219,14 +218,14 @@
 										</div><!-- #new_discussion -->
 										<div id="discussion_response_email">
 											<button id="submit_response" class="btn btn-success pull-right"><i
-														class="chatter-new"></i> Submit Response
+														class="chatter-new"></i> Verstuur Antwoord
 											</button>
 											@if(Config::get('chatter.email.enabled'))
 												<div id="notify_email">
 													<img src="/vendor/devdojo/chatter/assets/images/email.gif"
 														 class="chatter_email_loader">
 													<!-- Rounded toggle switch -->
-													<span>Notify me when someone replies</span>
+													<span>Stuur mij een bericht als iemand reageerd</span>
 													<label class="switch">
 														<input type="checkbox" id="email_notification"
 															   name="email_notification" @if(!Auth::guest() && $discussion->users->contains(Auth::user()->id)){{ 'checked' }}@endif>
@@ -269,14 +268,14 @@
 							<div class="col-md-7">
 								<!-- TITLE -->
 								<input type="text" class="form-control" id="title" name="title"
-									   placeholder="Title of {{ Config::get('chatter.titles.discussion') }}"
+									   placeholder="Titel voor {{ Config::get('chatter.titles.discussion') }}"
 									   v-model="title" value="{{ old('title') }}">
 							</div>
 
 							<div class="col-md-4">
 								<!-- CATEGORY -->
 								<select id="chatter_category_id" class="form-control" name="chatter_category_id">
-									<option value="">Select a Category</option>
+									<option value="">Selecteer een categorie</option>
 									@foreach($categories as $category)
 										@if(old('chatter_category_id') == $category->id)
 											<option value="{{ $category->id }}" selected>{{ $category->name }}</option>
@@ -295,7 +294,7 @@
 						<!-- BODY -->
 						<div id="editor">
 							@if( $chatter_editor == 'tinymce' || empty($chatter_editor) )
-								<label id="tinymce_placeholder">Add the content for your Discussion here</label>
+								<label id="tinymce_placeholder">Voeg hier de content voor de discussie toe</label>
 								<textarea id="body_in_discussion_view" class="richText" name="body"
 										  placeholder="">{{ old('body') }}</textarea>
 							@elseif($chatter_editor == 'simplemde')
@@ -309,12 +308,12 @@
 						<input type="hidden" name="_token" id="csrf_token_field" value="{{ csrf_token() }}">
 
 						<div id="new_discussion_footer">
-							<input type='text' id="color" name="color"/><span class="select_color_text">Select a Color for this Discussion (optional)</span>
+							<input type='text' id="color" name="color"/><span class="select_color_text">Selecteer een kleur (optional)</span>
 							<button id="submit_discussion" class="btn btn-success pull-right"><i
-										class="chatter-new"></i> Create {{ Config::get('chatter.titles.discussion') }}
+										class="chatter-new"></i> Aanmaken {{ Config::get('chatter.titles.discussion') }}
 							</button>
 							<a href="/{{ Config::get('chatter.routes.home') }}" class="btn btn-default pull-right"
-							   id="cancel_discussion">Cancel</a>
+							   id="cancel_discussion">Annuleer</a>
 							<div style="clear:both"></div>
 						</div>
 					</form>
@@ -389,7 +388,7 @@
                         container.prepend('<textarea id="post-edit-' + id + '"></textarea>');
                         // Client side XSS fix
                         $("#post-edit-" + id).text(body.html());
-                        container.append('<div class="chatter_update_actions"><button class="btn btn-success pull-right update_chatter_edit"  data-id="' + id + '" data-markdown="' + markdown + '"><i class="chatter-check"></i> Update Response</button><button href="/" class="btn btn-default pull-right cancel_chatter_edit" data-id="' + id + '"  data-markdown="' + markdown + '">Cancel</button></div>');
+                        container.append('<div class="chatter_update_actions"><button class="btn btn-success pull-right update_chatter_edit"  data-id="' + id + '" data-markdown="' + markdown + '"><i class="chatter-check"></i> Update Antwoord</button><button href="/" class="btn btn-default pull-right cancel_chatter_edit" data-id="' + id + '"  data-markdown="' + markdown + '">Annuleer</button></div>');
 
                         // create new editor from text area
                         if (markdown) {
