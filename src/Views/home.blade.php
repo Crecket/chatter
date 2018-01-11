@@ -92,7 +92,7 @@
 					        				<?php $discussion_body = $discussion->post[0]->body; ?>
 					        			@endif
 					        			<p>{{ substr(strip_tags($discussion_body), 0, 200) }}@if(strlen(strip_tags($discussion_body)) > 200){{ '...' }}@endif</p>
-					        		</div>
+					        	f	</div>
 
 					        		<div class="chatter_right">
 
@@ -125,7 +125,7 @@
         	<div class="row">
 	        	<div class="col-md-7">
 		        	<!-- TITLE -->
-	                <input type="text" class="form-control" id="title" name="title" placeholder="Title of {{ Config::get('chatter.titles.discussion') }}" v-model="title" value="{{ old('title') }}" >
+	                <input type="text" class="form-control" id="title" name="title" placeholder="Titel van {{ Config::get('chatter.titles.discussion') }}" v-model="title" value="{{ old('title') }}" >
 	            </div>
 
 	            <div class="col-md-4">

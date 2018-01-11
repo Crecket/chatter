@@ -17,7 +17,10 @@
 	@endif
 @stop
 
-@php ($isAdmin = Auth::user()->role()->value("authority") === 1)
+@php($isAdmin = false)
+@auth
+@php ($isAdmin = Auth::user()->role()->value("authority") === 4)
+@endauth
 
 @section('content')
 
