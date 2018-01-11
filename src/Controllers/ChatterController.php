@@ -39,14 +39,14 @@ class ChatterController extends Controller
     public function login()
     {
         if (!Auth::check()) {
-            return \Redirect::to('/'.config('chatter.routes.login').'?redirect='.config('chatter.routes.home'))->with('flash_message', 'Please create an account before posting.');
+            return \Redirect::to('/'.config('chatter.routes.login').'?redirect='.config('chatter.routes.home'))->with('flash_message', 'Maak een account aan voordat je iets plaatst.');
         }
     }
 
     public function register()
     {
         if (!Auth::check()) {
-            return \Redirect::to('/'.config('chatter.routes.register').'?redirect='.config('chatter.routes.home'))->with('flash_message', 'Please register for an account.');
+            return \Redirect::to('/'.config('chatter.routes.register').'?redirect='.config('chatter.routes.home'))->with('flash_message', 'Maak eerst een account aan.');
         }
     }
 }

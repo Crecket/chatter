@@ -64,10 +64,10 @@ class ChatterPostController extends Controller
 
         if (config('chatter.security.limit_time_between_posts')) {
             if ($this->notEnoughTimeBetweenPosts()) {
-                $minute_copy = (config('chatter.security.time_between_posts') == 1) ? ' minute' : ' minutes';
+                $minute_copy = (config('chatter.security.time_between_posts') == 1) ? ' minuut' : ' minuten';
                 $chatter_alert = [
                     'chatter_alert_type' => 'danger',
-                    'chatter_alert'      => 'In order to prevent spam, please allow at least '.config('chatter.security.time_between_posts').$minute_copy.' in between submitting content.',
+                    'chatter_alert' => 'Om spam te voorkomen moet je minimaal '.config('chatter.security.time_between_posts').$minute_copy.' wachten tussen posts.',
                 ];
 
                 return back()->with($chatter_alert)->withInput();
@@ -103,14 +103,14 @@ class ChatterPostController extends Controller
 
             $chatter_alert = [
                 'chatter_alert_type' => 'success',
-                'chatter_alert'      => 'Response successfully submitted to '.config('chatter.titles.discussion').'.',
+                'chatter_alert' => 'Reactie successvol geplaatst.',
             ];
 
             return redirect('/'.config('chatter.routes.home').'/'.config('chatter.routes.discussion').'/'.$category->slug.'/'.$discussion->slug)->with($chatter_alert);
         } else {
             $chatter_alert = [
                 'chatter_alert_type' => 'danger',
-                'chatter_alert'      => 'Sorry, there seems to have been a problem submitting your response.',
+                'chatter_alert' => 'Er is iets fout gegaan bij het plaatsen van je reactie',
             ];
 
             return redirect('/'.config('chatter.routes.home').'/'.config('chatter.routes.discussion').'/'.$category->slug.'/'.$discussion->slug)->with($chatter_alert);
@@ -144,7 +144,7 @@ class ChatterPostController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int                      $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -160,7 +160,7 @@ class ChatterPostController extends Controller
         }
 
         $post = Models::post()->find($id);
-        if (!Auth::guest() && (Auth::user()->id == $post->user_id || Auth::user()->role()->value("authority") === 1)) {
+        if (!Auth::guest() && (Auth::user()->id == $post->user_id || Auth::user()->role()->value("authority") === 4)) {
             $post->body = Purifier::clean($request->body);
             $post->save();
 
@@ -173,14 +173,14 @@ class ChatterPostController extends Controller
 
             $chatter_alert = [
                 'chatter_alert_type' => 'success',
-                'chatter_alert'      => 'Successfully updated the '.config('chatter.titles.discussion').'.',
+                'chatter_alert' => 'De '.config('chatter.titles.discussion').' is successvol geüpdate!.',
             ];
 
             return redirect('/'.config('chatter.routes.home').'/'.config('chatter.routes.discussion').'/'.$category->slug.'/'.$discussion->slug)->with($chatter_alert);
         } else {
             $chatter_alert = [
                 'chatter_alert_type' => 'danger',
-                'chatter_alert'      => 'Nah ah ah... Could not update your response. Make sure you\'re not doing anything shady.',
+                'chatter_alert' => 'Er is iets fout gegaan bij het updaten van deze '.config('chatter.titles.discussion'),
             ];
 
             return redirect('/'.config('chatter.routes.home'))->with($chatter_alert);
@@ -199,10 +199,10 @@ class ChatterPostController extends Controller
     {
         $post = Models::post()->with('discussion')->findOrFail($id);
 
-        if ($request->user()->id !== (int) $post->user_id  && Auth::user()->role()->value("authority") !== 1) {
+        if ($request->user()->id !== (int)$post->user_id && Auth::user()->role()->value("authority") !== 4) {
             return redirect('/'.config('chatter.routes.home'))->with([
                 'chatter_alert_type' => 'danger',
-                'chatter_alert'      => 'Nah ah ah... Could not delete the response. Make sure you\'re not doing anything shady.',
+                'chatter_alert' => 'We konden deze post niet verwijderen.',
             ]);
         }
 
@@ -212,7 +212,7 @@ class ChatterPostController extends Controller
 
             return redirect('/'.config('chatter.routes.home'))->with([
                 'chatter_alert_type' => 'success',
-                'chatter_alert'      => 'Successfully deleted the response and '.strtolower(config('chatter.titles.discussion')).'.',
+                'chatter_alert' => 'De '.strtolower(config('chatter.titles.discussion')).' is successvol verwijderd.',
             ]);
         }
 
@@ -222,7 +222,7 @@ class ChatterPostController extends Controller
 
         return redirect($url)->with([
             'chatter_alert_type' => 'success',
-            'chatter_alert'      => 'Successfully deleted the response from the '.config('chatter.titles.discussion').'.',
+            'chatter_alert' => 'De reacte van deze '.config('chatter.titles.discussion').' is successvol verwijderd.',
         ]);
     }
 }

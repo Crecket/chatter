@@ -92,7 +92,7 @@
 					        				<?php $discussion_body = $discussion->post[0]->body; ?>
 					        			@endif
 					        			<p>{{ substr(strip_tags($discussion_body), 0, 200) }}@if(strlen(strip_tags($discussion_body)) > 200){{ '...' }}@endif</p>
-					        	f	</div>
+					        		</div>
 
 					        		<div class="chatter_right">
 

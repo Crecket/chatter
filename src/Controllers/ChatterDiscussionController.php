@@ -78,10 +78,10 @@ class ChatterDiscussionController extends Controller
 
         if (config('chatter.security.limit_time_between_posts')) {
             if ($this->notEnoughTimeBetweenDiscussion()) {
-                $minute_copy = (config('chatter.security.time_between_posts') == 1) ? ' minute' : ' minutes';
+                $minute_copy = (config('chatter.security.time_between_posts') == 1) ? ' minuut' : ' minuten';
                 $chatter_alert = [
                     'chatter_alert_type' => 'danger',
-                    'chatter_alert'      => 'In order to prevent spam, please allow at least '.config('chatter.security.time_between_posts').$minute_copy.' in between submitting content.',
+                    'chatter_alert'      => 'Om spam te voorkomen moet je minimaal '.config('chatter.security.time_between_posts').$minute_copy.' wachten tussen posts.',
                     ];
 
                 return redirect('/'.config('chatter.routes.home'))->with($chatter_alert)->withInput();
@@ -142,14 +142,14 @@ class ChatterDiscussionController extends Controller
 
             $chatter_alert = [
                 'chatter_alert_type' => 'success',
-                'chatter_alert'      => 'Successfully created a new '.config('chatter.titles.discussion').'.',
+                'chatter_alert'      => 'Successvol een nieuwe '.config('chatter.titles.discussion').' aangemaakt.',
                 ];
 
             return redirect('/'.config('chatter.routes.home').'/'.config('chatter.routes.discussion').'/'.$category->slug.'/'.$slug)->with($chatter_alert);
         } else {
             $chatter_alert = [
                 'chatter_alert_type' => 'danger',
-                'chatter_alert'      => 'Whoops :( There seems to be a problem creating your '.config('chatter.titles.discussion').'.',
+                'chatter_alert'      => 'Whoops :( er is iets fout gegaan bij het plaatsen van je '.config('chatter.titles.discussion').'.',
                 ];
 
             return redirect('/'.config('chatter.routes.home').'/'.config('chatter.routes.discussion').'/'.$category->slug.'/'.$slug)->with($chatter_alert);
