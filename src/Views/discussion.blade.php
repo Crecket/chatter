@@ -244,9 +244,7 @@
 								@else
 
 									<div id="login_or_register">
-										<p>Please <a href="/{{ Config::get('chatter.routes.home') }}/login">login</a> or
-											<a href="/{{ Config::get('chatter.routes.home') }}/register">register</a> to
-											leave a response.</p>
+										<p>Log in of registreer om een reactie te plaatsen</p>
 									</div>
 
 								@endif
